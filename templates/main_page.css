@@ -1,0 +1,23 @@
+body{
+  margin:0px;
+  border:0px;
+}
+.nav1 {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.nav1-li {
+  float: left;
+}
+
+.nav1-li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding-left:20px;
+  text-decoration: none;
+}

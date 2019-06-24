@@ -1,0 +1,103 @@
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <style media="screen">
+    .mainDiv{
+    background:#87B548
+    }
+
+    label {
+     cursor: pointer;
+
+    </style>
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+      <title>Random Forest</title>
+    </head>
+    <body oncontextmenu="return false">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <a class="navbar-brand" href="/">One-Stop Machine Learning</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    </div>
+  </nav>
+  {%if seq %}
+  {%else%}
+ {% if dataset %}
+    {% if target %}
+    {% else %}
+       <br>
+       <form method="post" action="/random_forest" style="background-color:#4CAF50;display:block;width:50%;margin-left:auto;margin-right:auto;" enctype="multipart/form-data">
+                <br><br><label style="display:block;width:50%;margin:auto;"><b>Select the target variable:</b></label><br>
+                <input type="hidden" value={{dataset}} name="dataset">
+                <input type="hidden" value={{dataset_file_name}} name="dataset_file_name">
+                <select name="target" style="display:block;width:50%;margin:auto;" required>
+                {% for i in cols %}
+                <option value="{{i}}">{{i}}</option>
+                {% endfor%}
+                </select><br>
+                <label style="display:block;width:50%;margin:auto;"><b>Enter the number of labels in the target variable:</b></label><br>
+                <input type="number" name="no_of_labels" style="display:block;width:50%;margin:auto;" required><br><br>
+                <input type="submit" style="display:block;width:20%;margin:auto;" value="Train Model"><br><br>
+        </form><br>
+
+        <div style="display:block;margin-left:auto;margin-right:auto;width:40%;">
+               <h3 style="display:block;width:50%;margin:auto;">Dataset Profile Report</h3></div><br>
+               <iframe src="{{profile_report_path}}" frameborder="0" scrolling="no" style="height:10000px;;width:80%;display:block;margin-left:auto;margin-right:auto;overflow:visible;"></iframe><br><br>
+     {% endif%}
+  {% else %}
+        <br><br><br><br><br><br><br><br><br><br>
+        <form method="post" action="/random_forest" style="background-color:#4CAF50;display:block;width:50%;height:50%;margin:auto;margin-top:auto;margin-bottom:auto;" enctype="multipart/form-data">
+                <br><br><h4 align="center"><b>Upload the csv file of the dataset:</b></h4><br>
+                <input style="display:block;margin:auto;" type="file" name="dataset" required><br><br>
+                <input style="display:block;margin:auto; background-color: #333; /* Green */
+  border: none;border-radius:4px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;" type="submit" value="Upload"><br><br>
+                <h5 align="center">Note: The delimiter in the CSV file should be "," and NA values should be empty</h5><br>
+        </form><br>
+  {%endif%}
+{%endif%}
+  {% if acc %}
+      <div style="display:block;width:50%;margin-left:auto;margin-right:auto;"><br><br>
+      <b><h4 align="center">Random Forest Classification with Target:&nbsp{{target}}</h4></b><br>
+      <h5 style="font-family:verdana;">The Mean Absolute error of the model is:</h5>
+      {{mae}}<br><br>
+      <h5 style="font-family:verdana;">The Accuracy of the model is:</h5>
+      {{acc}}<br><br>
+      <h5 style="font-family:verdana;">The F1 score of the model is:</h5>
+  {{f1}}<br><br>
+  <h5 style="font-family:verdana;">The precision score of the model is:</h5>
+  {{precision}}<br><br>
+  <h5 style="font-family:verdana;">The Recall score of the model is:</h5>
+  {{recall}}<br><br>
+  {% for i in conf_mat%}
+<h5 style="font-family:verdana;">The Confusion Matrix of the prediction of the test samples is:</h5>
+<img src="{{i}}" style="height:700px;width:1000px;display:block;margin-left:auto;margin-right:auto;"/><br><br>
+{%endfor%}
+  {%if num_plots %}
+          <h5 style="font-family:verdana;">The plot of the numerical variables is:</h5><br>
+          {% for i in num_plots %}
+          <iframe src="{{i}}" style="height:700px;width:900px;display:block;margin-left:auto;margin-right:auto;"></iframe><br>
+          {% endfor %}
+  {% endif %}
+
+  {%if cat_plots %}
+      <h5>The plot of the categorical variables are:</h5>
+      {% for i in cat_plots %}
+      <img src="{{i}}" style="height:700px;width:900px;display:block;margin-left:auto;margin-right:auto;"/><br>
+      {% endfor %}
+  {% endif %}
+  {%endif%}
+  </div>
+    </body>
+  </html>
