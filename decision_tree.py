@@ -7,7 +7,7 @@ import seaborn as sn
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.tree import export_graphviz
-from sklearn.externals.six import StringIO  
+from six import StringIO  
 from IPython.display import Image  
 import pydotplus
 import numpy as np
